@@ -1,0 +1,12 @@
+body {
+	background: #FFFFFF url(../images/bg.png) no-repeat center;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.btn-info {
+	display: block;
+	overflow: auto;
+	height: auto;
+}
+.container {
+	margin-top: 50px;
+}
