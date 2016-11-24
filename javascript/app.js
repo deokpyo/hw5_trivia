@@ -154,7 +154,7 @@ var trivia = {
 
 // Timer Object
 var timer = {
-  num: 30,
+  num: 20,
   counter: 0,
   run: function(){
     $("#timer").html("<h3> Time Remaining: " + timer.num + " seconds</h3>");
@@ -170,13 +170,14 @@ var timer = {
     }
   },
   delay: function(time){
+    $("#timer").show();
     setTimeout(timer.nextGame, time);
   },
   stop: function(){
     clearInterval(timer.counter);
   },
   reset: function(){
-    timer.num = 30;
+    timer.num = 20;
   },
   nextGame: function(){
     if(question <= 13){
@@ -214,7 +215,7 @@ var game = {
     for(i in obj){
       if(i[0] === "a"){
         var divTag = $("<div>");
-        divTag.addClass("btn btn-info btn-lg");
+        divTag.addClass("btn btn-warning btn-lg");
         divTag.attr("data-answer", i);
         divTag.on({"click": function() {
           // stop/reset the timer
@@ -249,21 +250,21 @@ var game = {
   },
   right: function(obj){
     right++;
-    $("#result").html("<h3>You have selected the correct answer: " + obj.ca + "</h3><h4>Notes: " + obj.ex + "</h4>" + "<p><img src='images/" + obj.img + ".jpg'/></p>");
+    $("#result").html("<h3 style='color: blue;'>You have selected the correct answer: " + obj.ca + "</h3><h4>Notes: " + obj.ex + "</h4>" + "<p><img src='images/" + obj.img + ".jpg'/></p><p>You will be redirected to next question in 10 seconds.</p>");
     $("#result").show();
     $("#panel").hide();
     timer.delay(10000);
   },
   wrong: function(obj){
     wrong++;
-    $("#result").html("<h3>You have selected a wrong answer. Correct answer was: " + obj.ca + "</h3><h4>Notes: " + obj.ex + "</h4>" + "<p><img src='images/" + obj.img + ".jpg'/></p>");
+    $("#result").html("<h3 style='color: red;'>You have selected a wrong answer. Correct answer was: " + obj.ca + "</h3><h4>Notes: " + obj.ex + "</h4>" + "<p><img src='images/" + obj.img + ".jpg'/></p><p>You will be redirected to next question in 10 seconds.</p>");
     $("#result").show();
     $("#panel").hide();
     timer.delay(10000);
   },
   answer: function(obj){
     none++;
-    $("#result").html("<h3>Time is up. Correct Answer was: " + obj.ca + "</h3><h4>Notes: " + obj.ex + "</h4>" + "<p><img src='images/" + obj.img + ".jpg'/></p>");
+    $("#result").html("<h3 style='color: green;''>Time is up. Correct Answer was: " + obj.ca + "</h3><h4>Notes: " + obj.ex + "</h4>" + "<p><img src='images/" + obj.img + ".jpg'/></p><p>You will be redirected to next question in 10 seconds.</p>");
     $("#result").show();
     $("#panel").hide();
     timer.delay(10000);
@@ -280,6 +281,7 @@ var game = {
     $("#panel").hide();
     $("#timer").hide();
   },
+  // game reset function
   reset: function(){
     right = 0;
     wrong = 0;
@@ -294,16 +296,12 @@ var game = {
 
 $(document).ready(function(){
   $("#restart").hide();
-  $(".btn-info").click(function(){
-    var selected = $(this).data("answer")
-    console.log(selected);
-  });
 
   $("#start").on("click", function(){
     $("#start").hide();
+    $("#beer").hide();
     game.load();
   });
-
 
   $("#restart").on("click", function(){
     game.reset();
